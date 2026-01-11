@@ -1,12 +1,16 @@
 package com.custom.annotations.controller;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.custom.annotations.RegistrationService;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.custom.annotations.RegistrationRequestDto;
+import com.custom.annotations.services.RegistrationService;
 
 @RestController
 @RequestMapping("/api/register")
-public class AddUserController {
+public class RegistrationController {
 
     private final RegistrationService registrationService;
 
@@ -15,7 +19,7 @@ public class AddUserController {
     }
 
     @PostMapping
-    public String register(@RequestBody RegistrationDTO registrationDTO) {
+    public String register(@RequestBody RegistrationRequestDto registrationDTO) {
         return registrationService.registerUser(registrationDTO);
     }
 }

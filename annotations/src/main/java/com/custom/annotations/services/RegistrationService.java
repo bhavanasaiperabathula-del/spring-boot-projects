@@ -2,10 +2,14 @@ package com.custom.annotations.services;
 
 import org.springframework.stereotype.Service;
 
+import com.custom.annotations.LogExecution;
+import com.custom.annotations.RegistrationRequestDto;
+
 @Service
 public class RegistrationService {
 
-    public String registerUser(RegistrationDTO registrationDTO) {
+    @LogExecution(logArgs = true, logTime = true)
+    public String registerUser(RegistrationRequestDto registrationDTO) {
 
         // Business logic (for now just printing)
         System.out.println("Registering user:");

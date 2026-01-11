@@ -8,9 +8,9 @@ public class RegistrationRequestDto {
 
     
     // Constructors
-    public RegistrationDTO() {}
+    public RegistrationRequestDto() {}
 
-    public RegistrationDTO(String username, String email, String password) {
+    public RegistrationRequestDto(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
