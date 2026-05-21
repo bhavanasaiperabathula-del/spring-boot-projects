@@ -1,12 +1,15 @@
 package com.example.authorization.config;
 
+import com.example.authorization.entity.Permissions;
 import com.example.authorization.filters.JwtAuthFilter;
 import com.example.authorization.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +25,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Component
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -30,7 +34,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain fiterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/authenticate").permitAll()
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/authenticate").permitAll()
+                                /*.requestMatchers(HttpMethod.GET, "/weather/**").hasAuthority(Permissions.READ.name())
+                                .requestMatchers(HttpMethod.POST, "/weather/**").hasAuthority(Permissions.WRITE.name())*/
                         .anyRequest().authenticated());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -56,4 +63,3 @@ public class SecurityConfig {
 
     }
 }
-

@@ -17,6 +17,6 @@ public enum Roles {
         return permissions;
     }
 
-    
+
 
 }

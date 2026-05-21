@@ -7,10 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 
 @Entity
 @Table(name = "users")
@@ -40,14 +38,14 @@ public class Users implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
         authorities.add(new SimpleGrantedAuthority("ROLE_"+role.name()));
         authorities.addAll(role.getPermissions().stream()
-        .map(permissions -> new SimpleGrantedAuthority(permissions.name())).collect(Collectors.toSet()));
+                .map(permissions -> new SimpleGrantedAuthority(permissions.name())).collect(Collectors.toSet()));
 
         return authorities;
     }
@@ -59,4 +57,3 @@ public class Users implements UserDetails {
     }
 
 }
-
